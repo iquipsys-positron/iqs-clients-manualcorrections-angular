@@ -1,0 +1,7 @@
+@import './panels/CorrectionEditPanel';
+@import './panels/CorrectionEmptyPanel';
+@import './panels/CorrectionHistoryPanels';
+@import './panels/CorrectionParamTable';
+.pip-list-container.iqs-menu-empty {
+    margin-top: 48px;
+}

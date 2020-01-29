@@ -1,0 +1,79 @@
+<div class="pip-main-menu iqs-stat" ng-class="{'pip-single-content': $ctrl.details}">
+    <div class="pip-menu layout-column iqs-menu">
+        <div ng-show="$ctrl.error" class="pip-page-errors">
+            <span class="pip-error-text color-error flex"> {{ $ctrl.error }}</span>
+            <md-icon md-svg-icon="icons:warn-circle" class="color-error"></md-icon>
+        </div>
+        <div>
+            <md-tabs md-dynamic-height md-selected="$ctrl.section">
+                <md-tab label="{{ section.title | translate }}" id="{{ section.id }}" ng-repeat="section in $ctrl.sections track by $index"
+                        ng-click="$ctrl.selectSection(section.id)">
+                </md-tab>
+            </md-tabs>
+        </div>
+        <div class="flex" style="position: relative; overflow-x: hidden; overflow-y: auto;" ng-if="($ctrl.state == 'data' || $ctrl.currentState == 'edit' || $ctrl.currentState == 'add') && !$ctrl.isPreLoading">
+            <iqs-correction-request-list-panel class="layout-column flex" ng-if="($ctrl.state == 'data' || $ctrl.currentState == 'edit' || $ctrl.currentState == 'add') && $ctrl.section == 0"
+                                               ng-disabled="$ctrl.transaction.busy() || ($ctrl.currentState == 'edit' || $ctrl.currentState == 'add')"
+                                               iqs-select="$ctrl.onSelectRequestCor(item)" iqs-collection="$ctrl.collection">
+            </iqs-correction-request-list-panel>
+
+            <iqs-correction-history-list-panel class="layout-column flex" ng-if="($ctrl.state == 'data' || $ctrl.currentState == 'edit' || $ctrl.currentState == 'add') && $ctrl.section == 1"
+                                               iqs-collection="$ctrl.collectionHistory" ng-disabled="$ctrl.transactionHistory.busy() || ($ctrl.currentState == 'edit' || $ctrl.currentState == 'add')"
+                                               iqs-select="$ctrl.onSelectHistoryCor(item)">
+            </iqs-correction-history-list-panel>
+        </div>
+
+        <md-button iqs-test-add class="md-fab md-accent md-fab-bottom-right" ng-disabled="$ctrl.transaction.busy() || $ctrl.isPreLoading"
+                   ng-if="($ctrl.state == 'data' && $ctrl.currentState != 'edit' && $ctrl.currentState != 'add')"
+                   aria-label="add" ng-click="$ctrl.onAdd()">
+            <md-icon md-svg-icon="icons:plus"></md-icon>
+        </md-button>
+
+        <div class="pip-list-container iqs-menu-empty" ng-if="($ctrl.state == 'empty' || $ctrl.state == 'progress' || $ctrl.isPreLoading) && $ctrl.pipMedia('gt-sm')">
+        </div>
+
+        <div class="pip-list-container" style="height: calc( 100%); top: 48px;  overflow-x: hidden;" ng-if="($ctrl.state == 'empty' || $ctrl.state == 'progress' || $ctrl.isPreLoading) && !$ctrl.pipMedia('gt-sm')">
+            <div class="layout-column layout-align-center-center flex h-stretch iqs-empty">
+                <div class="pip-empty" ng-if="$ctrl.state == 'empty' && !$ctrl.isPreLoading">
+                    <img src="images/empty/empty.svg" class="pip-pic">
+                    <div class="pip-text">
+                        {{ ::'MANUAL_CORRECTIONS_EMPTY_TITLE' | translate }}
+                    </div>
+                    <div class="pip-actions layout-row layout-align-end-center" ng-if="$ctrl.section == 0">
+                        <md-button class="color-accent-bg tm12 flex" aria-label="ADD" ng-click="$ctrl.onAdd()" ng-disabled="$ctrl.transaction.busy() || $ctrl.isPreLoading">
+                            {{ ::'MANUAL_CORRECTIONS_EMPTY_ADD_BUTTON' | translate }}
+                        </md-button>
+                    </div>
+                </div>
+
+                <div class="pip-empty" ng-if="$ctrl.state == 'progress' || $ctrl.isPreLoading">
+                    <img src="images/empty/progress.svg" class="pip-pic">
+                    <div class="pip-text">
+                        {{ ::'MANUAL_CORRECTIONS_LOADING_TITLE' | translate }}
+                        <md-progress-linear md-mode="indeterminate" class="tm24"></md-progress-linear>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pip-content-container">
+        <iqs-correction-request-details-panel ng-if="$ctrl.state == 'data' && $ctrl.section == 0 && !$ctrl.isPreLoading" iqs-item="$ctrl.selectedItem"
+                                              iqs-reject="$ctrl.onReject($ctrl.selectedItem)" iqs-approved="$ctrl.onApproved($ctrl.selectedItem)"
+                                              iqs-edit="$ctrl.onEdit($ctrl.selectedItem)">
+        </iqs-correction-request-details-panel>
+
+        <iqs-correction-history-details-panel ng-if="$ctrl.state == 'data' && $ctrl.section == 1 && !$ctrl.isPreLoading" iqs-item="$ctrl.selectedItem"
+                                              iqs-delete="$ctrl.onDelete($ctrl.selectedItem)">
+        </iqs-correction-history-details-panel>
+
+        <iqs-correction-edit-panel ng-if="$ctrl.state == 'edit' || $ctrl.state == 'add' && !$ctrl.isPreLoading" iqs-save="$ctrl.onSave(item)"
+                                   iqs-cancel="$ctrl.onCancel()" iqs-new-item="$ctrl.new" iqs-edit-item="$ctrl.edit"
+                                   ng-disabled="$ctrl.transaction.busy()">
+        </iqs-correction-edit-panel>
+
+        <iqs-correction-empty-panel ng-if="$ctrl.state == 'empty' || $ctrl.state == 'progress' || $ctrl.isPreLoading" iqs-state="$ctrl.state"
+                                    iqs-section="$ctrl.section" iqs-pre-loading="$ctrl.isPreLoading" iqs-add="$ctrl.onAdd()" ng-disabled="$ctrl.transaction.busy()">
+        </iqs-correction-empty-panel>
+    </div>
+</div>

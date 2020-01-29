@@ -1,0 +1,25 @@
+<pip-document>
+    <!--<div class="pip-body rp0 layout-column layout-align-center-center flex ">-->
+    <div class="layout-column layout-align-center-center flex iqs-empty">
+        <div class="pip-empty" ng-if="$ctrl.state == 'empty' && !$ctrl.isPreLoading">
+            <img src="images/empty/empty.svg" class="pip-pic">
+            <div class="pip-text">
+                {{ ::'MANUAL_CORRECTIONS_EMPTY_TITLE' | translate }}
+            </div>
+            <div class="pip-actions  layout-row layout-align-end-center" ng-if="$ctrl.section == 0">
+                <md-button class="color-accent-bg tm12 flex" aria-label="ADD" ng-click="$ctrl.onAdd()" ng-disabled="$ctrl.ngDisabled()">
+                    {{ ::'MANUAL_CORRECTIONS_EMPTY_ADD_BUTTON' | translate }}
+                </md-button>
+            </div>
+        </div>
+
+        <div class="pip-empty" ng-if="$ctrl.state == 'progress' || $ctrl.isPreLoading">
+            <img src="images/empty/progress.svg" class="pip-pic">
+            <div class="pip-text">
+                {{ ::'MANUAL_CORRECTIONS_LOADING_TITLE' | translate }}
+                <md-progress-linear md-mode="indeterminate" class="tm24"></md-progress-linear>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+</pip-document>

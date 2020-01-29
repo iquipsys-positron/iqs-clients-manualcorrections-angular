@@ -1,0 +1,14 @@
+.iqs-correction-edit-panel {
+    md-input-container {
+        md-select {
+            .md-select-value {
+                max-height: 26px !important;
+            }
+        }
+    }
+    .iqs-icon {
+        .md-icon-button {
+            margin: 0px 0px 4px -8px;
+        }
+    }
+}

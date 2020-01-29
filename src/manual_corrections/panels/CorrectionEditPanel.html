@@ -1,0 +1,141 @@
+<pip-document>
+    <div class="pip-body p24 bp0">
+        <div class="text-title" ng-if="!$ctrl.correction.id">
+            {{ ::'CORRECTION_NEW_TITLE' | translate }}
+        </div>
+        <div class="text-title" ng-if="$ctrl.correction.id">
+            {{ ::'CORRECTION_EDIT_TITLE' | translate }}
+        </div>
+
+        <div class="layout-row layout0align-start-center">
+            <md-input-container class="md-block flex">
+                <!--<label>{{ ::'CORRECTION_OBJECT_GROUP_LABEL' | translate }}</label>-->
+                <md-select class="flex" aria-label="OBJECT_GROUP" ng-model="$ctrl.correctionEntityId" ng-disabled="$ctrl.ngDisabled()"
+                           ng-change="$ctrl.error=''" required placeholder="{{ ::'CORRECTION_OBJECT_GROUP_PLACEHOLDER' | translate }}"
+                           name="correctionEntityId">
+                    <md-option ng-repeat="obj in $ctrl.objectsGroups  track by $index" ng-value="obj.id">
+                        {{ obj.name }}
+                    </md-option>
+                </md-select>
+                <div class="md-errors-spacer"></div>
+            </md-input-container>
+
+            <md-input-container class="flex-fixed">
+                <!--<label>Enter date</label>-->
+                <md-datepicker ng-model="$ctrl.correction.time" name="dateField" md-hide-icons="calendar" placeholder="{{ ::'CORRECTION_DATE' | translate }}"
+                               md-max-date="ctrl.maxDate"></md-datepicker>
+            </md-input-container>
+        </div>
+
+        <md-input-container class="md-block tm0">
+            <!--<label>{{::'CORRECTION_REASON_LABEL' | translate }}</label>-->
+            <input ng-model="$ctrl.correction.reason" aria-label="REASON" ng-change="$ctrl.error=''" ng-disabled="$ctrl.ngDisabled()"
+                   placeholder="{{::'CORRECTION_REASON_LABEL' | translate }}" />
+        </md-input-container>
+
+        <div class="entry-label color-secondary-text">
+            {{ 'CORRECTION_PARAMETRS_LABEL' | translate }}
+        </div>
+
+        <div ng-repeat="parametr in $ctrl.paramsCollection track by $index" class="layout-row layout-align-start-center">
+            <div class="iqs-icon flex-fixed">
+                <md-button class="md-icon-button" ng-disabled="$ctrl.ngDisabled()" aria-label="DELETE-OBJECT" ng-if="!$last"
+                           ng-click="$ctrl.onDeleteParams($index)">
+                    <md-icon md-svg-icon="icons:cross-circle"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-disabled="$ctrl.ngDisabled()" aria-label="ADD-OBJECT" ng-if="$last"
+                           ng-click="$ctrl.onAddParams()">
+                    <md-icon md-svg-icon="icons:plus-circle"></md-icon>
+                </md-button>
+            </div>
+            <md-input-container class="md-block flex bm0">
+                <md-select class="flex" aria-label="PARAMS" ng-model="parametr.id" ng-disabled="$ctrl.ngDisabled()"
+                           md-on-close="$ctrl.onChangeParams($index)" placeholder="{{ ::'CORRECTION_PARAMETRS_PLACEHOLDER' | translate }}">
+                    <md-option ng-repeat="obj in $ctrl.correctionParametrs  track by $index" ng-value="obj.id">
+                        {{ ::obj.name | translate }}
+                    </md-option>
+                </md-select>
+                <div class="md-errors-spacer"></div>
+            </md-input-container>
+            <md-input-container class="flex-fixed md-block bm0" style="width: 100px;">
+                <input ng-model="parametr.value" aria-label="VALUE" ng-disabled="$ctrl.ngDisabled()" ng-change="$ctrl.onChangeParams($index)" type="number" />
+                <div class="hint">{{ $ctrl.correctionParametrsMeasure[parametr.id].name }}</div>
+            </md-input-container>
+        </div>
+
+        <div class="entry-label color-secondary-text">
+            {{ 'CORRECTION_EVENT_LABEL' | translate }}
+        </div>
+        <div ng-repeat="rule in $ctrl.eventParamCollection track by $index" class="layout-row layout-align-start-center">
+            <div class="iqs-icon flex-fixed">
+                <md-button class="md-icon-button" ng-disabled="$ctrl.ngDisabled()" aria-label="DELETE-OBJECT" ng-if="!$last"
+                           ng-click="$ctrl.onDeleteEventRuleParams($index)">
+                    <md-icon md-svg-icon="icons:cross-circle"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-disabled="$ctrl.ngDisabled()" aria-label="ADD-OBJECT" ng-click="$ctrl.onAddEventRuleParams('rule')"
+                           ng-if="$last">
+                    <md-icon md-svg-icon="icons:plus-circle"></md-icon>
+                </md-button>
+            </div>
+            <md-input-container class="md-block flex bm0">
+                <md-select class="flex" aria-label="PARAMS" ng-model="rule.id" ng-disabled="$ctrl.ngDisabled()"
+                           ng-change="$ctrl.onChangeEventRule($index)" placeholder="{{ ::'CORRECTION_EVENT_PLACEHOLDER' | translate }}">
+                    <md-option ng-repeat="obj in $ctrl.rules  track by $index" ng-value="obj.id">
+                        {{ ::obj.name | translate }}
+                    </md-option>
+                </md-select>
+                <div class="md-errors-spacer"></div>
+            </md-input-container>
+            <md-input-container class="md-block flex-fixed bm0" style="width: 100px;">
+                <input ng-model="rule.value" aria-label="VALUE" ng-disabled="$ctrl.ngDisabled()" ng-change="$ctrl.onChangeEventRule($index)" type="number" />
+            </md-input-container>
+        </div>
+
+        <div class="entry-label color-secondary-text">
+            {{ 'CORRECTION_TIME_LABEL' | translate }}
+        </div>
+        <div ng-repeat="zone in $ctrl.zoneParamCollection track by $index" class="layout-row layout-align-start-center">
+            <div class="iqs-icon flex-fixed">
+                <md-button class="md-icon-button" ng-disabled="$ctrl.ngDisabled()" aria-label="DELETE-OBJECT" ng-if="!$last"
+                           ng-click="$ctrl.onDeleteZoneParams($index)">
+                    <md-icon md-svg-icon="icons:cross-circle"></md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-disabled="$ctrl.ngDisabled()" aria-label="ADD-OBJECT" ng-if="$last"
+                           ng-click="$ctrl.onAddZoneParams('zone')">
+                    <md-icon md-svg-icon="icons:plus-circle"></md-icon>
+                </md-button>
+            </div>
+            <md-input-container class="md-block flex bm0">
+                <md-select class="flex" aria-label="PARAMS" ng-model="zone.id" ng-disabled="$ctrl.ngDisabled()"
+                           required name="zoneSelect" ng-change="$ctrl.onChangeZone($index)" placeholder="{{ ::'CORRECTION_TIME_PLACEHOLDER' | translate }}">
+                    <md-option ng-repeat="obj in $ctrl.zones track by $index" ng-value="obj.id">
+                        {{ ::obj.name | translate }}
+                    </md-option>
+                </md-select>
+                <!-- <div ng-messages="" role="alert">
+                    <div ng-message="required"></div>
+                </div> -->
+                <div class="md-errors-spacer"></div>
+            </md-input-container>
+            <md-input-container class="md-block flex-fixed bm0" style="width: 100px;">
+                <input ng-model="zone.value" aria-label="VALUE" ng-disabled="$ctrl.ngDisabled()" ng-change="$ctrl.onChangeZone($index)"
+                       ng-pattern="/^[0-9]{1,}$/" name="zoneValue" type="number"/>
+                <!-- TODO: ParameterName.Online -->
+                <div class="hint">{{ $ctrl.correctionParametrsMeasure['online'].name }}</div>
+            </md-input-container>
+        </div>
+    </div>
+
+    <div class="pip-footer " style="height: 86px">
+        <div class="pip-action-list w-stretch">
+            <md-button class="pip-action-list-item" ng-click="$ctrl.onSaveClick()" ng-disabled="$ctrl.ngDisabled()">
+                <md-icon class="pip-pic" md-svg-icon="icons:check"></md-icon>
+                <div class="pip-title">{{ ::'MANUAL_CORRECTIONS_SAVE' | translate }}</div>
+            </md-button>
+            <md-button class="pip-action-list-item" ng-click="$ctrl.onCancelClick()" ng-disabled="$ctrl.ngDisabled()">
+                <md-icon class="pip-pic" md-svg-icon="icons:cross"></md-icon>
+                <div class="pip-title">{{ ::'MANUAL_CORRECTIONS_CANCEL' | translate}}</div>
+            </md-button>
+        </div>
+    </div>
+</pip-document>

@@ -1,0 +1,24 @@
+<div class="layout-row tp8 bp8 flex text-body2">
+    <div style="width: 33%">
+        <span> {{ 'CORRECTIONS_CORRECTION_NAME' | translate }} </span>
+    </div>
+    <div style="width: 33%">
+        {{ 'CORRECTIONS_CORRECTED_VALUE' | translate }}
+    </div>
+    <div style="width: 33%">
+        {{ 'CORRECTIONS_ACTUAL_VALUE' | translate }}
+    </div>
+</div>
+
+<div class="layout-row tp8 bp8 flex text-body1" ng-repeat="parametr in $ctrl.item.changes track by $index">
+    <div style="width: 33%">
+        <span> {{ parametr.description | translate }}</span>
+    </div>
+    <div style="width: 33%">
+        {{ parametr.value }} {{ parametr.measure }}
+    </div>
+    <div style="width: 33%" ng-if="$ctrl.isStatistics">
+        <span ng-if="parametr.currentValue !== null"> ( {{ parametr.currentValue }} ) </span>
+        <md-progress-circular ng-show="parametr.currentValue === null" class="md-hue-2" md-diameter="16px"></md-progress-circular>
+    </div>
+</div>

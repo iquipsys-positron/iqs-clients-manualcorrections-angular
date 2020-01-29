@@ -1,0 +1,56 @@
+<pip-document class="pip-scroll ">
+    <div class="pip-body">
+        <div class="layout-row layout-align-start-center bm16">
+            <div class="pip-face rm16 p8 layout-row layout-align-center-center {{ $ctrl.item.status == 'rejected' ? 'bg-rejected-color' : 'bg-approved-color' }}">
+                <md-icon class="white-color" ng-if="$ctrl.item.status == 'rejected'" md-svg-icon="icons:cross"></md-icon>
+                <md-icon class="white-color" ng-if="$ctrl.item.status == 'approved'" md-svg-icon="icons:check"></md-icon>
+            </div>
+            <div class="pip-content flex">
+                <p class="m0 pip-title text-body2 text-overflow flex">
+                    {{ $ctrl.item.ref_name }}
+                </p>
+                <p class="pip-subtitle text-body text-overflow flex rp24 rm8">
+                    {{ $ctrl.item.time | formatMiddleDate }}
+                </p>
+            </div>
+        </div>
+
+        <div class="w-stretch tm8 bm16">
+            <div class="layout-row layout-align-start-center event-content" ng-if="$ctrl.item.reason">
+                <div class="flex-fixed rm16">
+                    <md-icon md-svg-icon="icons:comment" class="incident-icon">
+                    </md-icon>
+                </div>
+                <div class="event-text">
+                    <div class="flex text-body1">
+                        {{ $ctrl.item.reason }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="layout-row layout-align-start-start tp8 event-content" ng-if="$ctrl.item.changes && $ctrl.item.changes.length > 0">
+                <div class="flex-fixed tm4 rm16">
+                    <md-icon md-svg-icon="icons:submenu" class="incident-icon">
+                    </md-icon>
+                </div>
+                <div class="event-text flex">
+                    <div>
+                        <iqs-correction-param-table iqs-correction-params="$ctrl.item" iqs-correction-statistics="false">
+                        </iqs-correction-param-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pip-footer " style="height: 86px">
+        <div class="pip-action-list w-stretch">
+            <md-button class="pip-action-list-item" ng-click="$ctrl.onDelete($ctrl.item)" ng-disabled="$ctrl.ngDisabled()">
+
+                <md-icon class="pip-pic" md-svg-icon="icons:trash"></md-icon>
+                <div class="pip-title">{{ ::'MANUAL_CORRECTIONS_UNDO' | translate }}</div>
+            </md-button>
+        </div>
+    </div>
+
+</pip-document>

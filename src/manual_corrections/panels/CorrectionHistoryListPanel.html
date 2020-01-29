@@ -1,0 +1,20 @@
+<div class="pip-body layout-column flex">
+    <md-list class="pip-ref-list iqs-stat-list w-stretch h-stretch" pip-selected="$ctrl.selectedIndex" pip-select="$ctrl.selectItem($event.index)"
+             pip-selected-watch="$ctrl.selectedIndex">
+        <md-list-item class="pip-ref-list-item pip-selectable pointer" ng-class="{'selected': $ctrl.selectedIndex == $index && $ctrl.pipMedia('gt-sm') }"
+                      md-ink-ripple ng-repeat="correction in $ctrl.collectionEx track by correction.id">
+            <div class="pip-face rm16 p8 layout-row layout-align-center-center {{ correction.status == 'rejected' ? 'bg-rejected-color' : 'bg-approved-color' }}">
+                <md-icon class="white-color" ng-if="correction.status == 'rejected'" md-svg-icon="icons:cross"></md-icon>
+                <md-icon class="white-color" ng-if="correction.status == 'approved'" md-svg-icon="icons:check"></md-icon>
+            </div>
+            <div class="pip-content flex">
+                <p class="m0 pip-title text-overflow flex">
+                    {{ correction.ref_name }}
+                </p>
+                <p class="pip-subtitle text-overflow flex rp24 rm8">
+                    {{ correction.time | formatMiddleDate }}
+                </p>
+            </div>
+        </md-list-item>
+    </md-list>
+</div>
